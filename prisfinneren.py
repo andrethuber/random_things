@@ -1,34 +1,56 @@
+import sys
 #Skriv rabbaten (prosent) her:
-rabbat = 0
+rabatt = None
 #Rabbaten (nummer) her:
-rabbatnumber = 100
+rabattnummer = None
 #Skriv gammelpris her:
-gammelpris = 1000
+gammelpris = None
 #Skriv nypris her:
-nypris = 900
-#Skriv hva du vil regne ut
-#1 = Gammelpris + Rabbat = Nypris
-#2 = Gammelpris + Nypris = Rabbat
-#3 = Nypris + Rabbat = Gammelpris
-#4 = Rabbatnumber + Gammelpris = Nypris
-regnetype = 2
-#Kode / Formel:
-print("Hello World")
-if regnetype == 1:
-    print("Den nye prisen er:")
-    print((1 - rabbat * .01) * gammelpris)
+nypris = None
+#testkode
+if 1 + 1 is not 2:
+    print("no! >:(")
+    print("math is hard. ok.")
+    print("error1")
+    sys.exit(1)
+#Kode
+if rabatt is None:
+    if gammelpris is not None and nypris is not None:
+        rabatt = (gammelpris - nypris) / gammelpris * 100
+    elif gammelpris is not None and rabattnummer is not None:
+        rabatt = rabattnummer / gammelpris * 100
+    elif rabattnummer is not None and nypris is not None:
+        rabatt = rabattnummer / (nypris + rabattnummer) * 100
 
-elif regnetype == 2:
-    print("Rabbaten på produktet er:")
-    print((gammelpris - nypris) / gammelpris * 100)
+if rabattnummer is None:
+    if rabatt is not None and gammelpris is not None:
+        rabattnummer = gammelpris * (rabatt / 100)
+    elif rabatt is not None and nypris is not None:
+        rabattnummer = nypris / (1 - rabatt / 100) * (rabatt / 100)
+    elif gammelpris is not None and nypris is not None:
+        rabattnummer = gammelpris - nypris
 
-elif regnetype == 3:
-    print("Den gamle prisen er:")
-    print(nypris / (1 - rabbat * .01))
+if gammelpris is None:
+    if rabatt is not None and rabattnummer is not None:
+        gammelpris = rabattnummer / (rabatt / 100)
+    elif rabatt is not None and nypris is not None:
+        gammelpris = nypris / (1 - rabatt / 100)
+    elif rabattnummer is not None and nypris is not None:
+        gammelpris = rabattnummer + nypris
 
-elif regnetype == 4:
-    print("Den nye prisen er:")
-    print(gammelpris - rabbatnumber)
+if nypris is None:
+    if rabatt is not None and rabattnummer is not None:
+        nypris = rabattnummer / (rabatt / 100) * (1 - rabatt / 100)
+    elif rabatt is not None and gammelpris is not None:
+        nypris = (1 - rabatt / 100) * gammelpris
+    elif rabattnummer is not None and gammelpris is not None:
+        nypris = gammelpris - rabattnummer
 
+if rabatt is not None and rabbatnumber is not None and gammelpris is not None and nypris is not None:
+    print("rabatt: " + str(float(rabatt)))
+    print("rabattnummer: " + str(float(rabattnummer)))
+    print("gammelpris: " + str(float(gammelpris)))
+    print("nypris: " + str(float(nypris)))
 else:
-    print ("velg et bedre tall >:(")
+    print("finnes ingen tall")
+    print("error2")
